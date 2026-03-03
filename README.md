@@ -2,278 +2,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema ORION | Painel Gerencial</title>
+    <title>ORION App - Motorista</title>
     <style>
         :root {
-            --primary-bg: #f4f7f6;
-            --sidebar-bg: #111827;
+            --bg-color: #f3f4f6;
             --card-bg: #ffffff;
-            --accent-color: #3b82f6;
+            --primary: #2563eb;
+            --success: #16a34a;
+            --danger: #dc2626;
             --text-main: #1f2937;
-            --text-light: #9ca3af;
-            --success: #10b981;
-            --danger: #ef4444;
+            --text-light: #6b7280;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         body {
+            background-color: #d1d5db;
             display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: var(--sidebar-bg);
-            color: white;
+        /* Simulação da tela do celular */
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background-color: var(--bg-color);
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
+            position: relative;
+            border: 8px solid #1f2937;
         }
 
-        .sidebar-header {
-            padding: 20px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border-bottom: 1px solid #374151;
-            text-align: center;
-            letter-spacing: 2px;
-        }
-
-        .sidebar-header span {
-            color: var(--accent-color);
-        }
-
-        .nav-links {
-            list-style: none;
-            padding: 20px 0;
-        }
-
-        .nav-links li {
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .nav-links li:hover, .nav-links li.active {
-            background-color: #1f2937;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
+        /* Cabeçalho */
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 1.8rem;
-        }
-
-        .user-info {
-            font-weight: 600;
-        }
-
-        /* KPI Cards */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .card h3 {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .card .value {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .card .positive { color: var(--success); }
-        .card .negative { color: var(--danger); }
-
-        /* Map & Controls Area */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        .map-container, .action-container {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            background-color: #e5e7eb;
-            border: 2px dashed #9ca3af;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: var(--accent-color);
+            background-color: #1f2937;
             color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .driver-info {
+            font-size: 1.2rem;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-            transition: background 0.3s;
         }
 
-        .btn:hover {
-            background-color: #2563eb;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        th {
-            color: var(--text-light);
+        .truck-info {
             font-size: 0.85rem;
-            text-transform: uppercase;
+            color: #9ca3af;
+            margin-top: 5px;
         }
 
         .status-badge {
-            padding: 4px 8px;
-            border-radius: 12px;
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            border-radius: 15px;
             font-size: 0.8rem;
+            font-weight: bold;
+            background-color: var(--primary);
+        }
+
+        /* Conteúdo Principal */
+        .content {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        /* Cartão de Próxima Parada */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .destination {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .metric-item strong {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        .metric-item span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Mapa Simulado */
+        .map-placeholder {
+            height: 200px;
+            background-color: #e5e7eb;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            border: 2px dashed #9ca3af;
             font-weight: bold;
         }
 
-        .status-ok { background-color: #d1fae5; color: #065f46; }
-        .status-alert { background-color: #fee2e2; color: #991b1b; }
+        /* Botões de Ação */
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn:active {
+            opacity: 0.8;
+        }
+
+        .btn-success { background-color: var(--success); }
+        .btn-danger { background-color: var(--danger); }
+        .btn-primary { background-color: var(--primary); }
+
+        /* Barra de Navegação Inferior */
+        .bottom-nav {
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .nav-item {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
 
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            SISTEMA <span>ORION</span>
+    <div class="mobile-container">
+        <div class="header">
+            <div class="driver-info">Christian Sampaio</div>
+            <div class="truck-info">Placa: ABC-1234 | Veículo Pesado</div>
+            <div id="statusBadge" class="status-badge">EM TRÂNSITO</div>
         </div>
-        <ul class="nav-links">
-            <li class="active">Painel Gerencial</li>
-            <li>Otimizador de Rotas (IA)</li>
-            <li>Gestão de Cargas</li>
-            <li>Monitoramento de Frota</li>
-            <li>Relatórios e BI</li>
-        </ul>
-    </aside>
 
-    <main class="main-content">
-        <header class="header">
-            <h1>Visão Geral da Operação</h1>
-            <div class="user-info">
-                Gerente de Logística | Transportadora Flávio
+        <div class="content">
+            
+            <div class="map-placeholder">
+                [Navegação GPS Ativa]
             </div>
-        </header>
 
-        <section class="kpi-grid">
             <div class="card">
-                <h3>Rotas Ativas</h3>
-                <div class="value">24</div>
-            </div>
-            <div class="card">
-                <h3>Economia Estimada (Mês)</h3>
-                <div class="value positive">R$ 120.400,00</div>
-            </div>
-            <div class="card">
-                <h3>Eficiência Algorítmica (PLIM)</h3>
-                <div class="value">98.5%</div>
-            </div>
-            <div class="card">
-                <h3>Alertas de Risco</h3>
-                <div class="value negative">1</div>
-            </div>
-        </section>
-
-        <section class="dashboard-grid">
-            <div class="map-container">
-                <h2>Rastreamento e Rotas (Tempo Real)</h2>
+                <div class="card-title">Próxima Entrega (Carga #4092)</div>
+                <div class="destination" id="currentDestination">Centro de Distribuição - SP</div>
+                <p style="font-size: 0.9rem; color: var(--text-light);">Av. Paulista, 1000</p>
                 
-                <div class="map-placeholder">
-                    Integração com API de Mapas / Meta-Heurística Ativa
+                <div class="metrics">
+                    <div class="metric-item">
+                        <strong id="distance">45 km</strong>
+                        <span>Distância</span>
+                    </div>
+                    <div class="metric-item">
+                        <strong id="time">50 min</strong>
+                        <span>Tempo Est.</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="action-container">
-                <h2>Painel de Otimização</h2>
-                <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 10px;">
-                    O motor de Inteligência Artificial está pronto para processar novas variáveis de tráfego e peso.
-                </p>
-                <button class="btn" onclick="alert('Iniciando processamento via PLIM e Meta-Heurísticas. Aguarde o cálculo do Ótimo Local...')">Executar Otimização (RF-01)</button>
-                
-                <h3 style="margin-top: 30px; font-size: 1rem;">Veículos em Destaque</h3>
-                <table>
-                    <tr>
-                        <th>Placa</th>
-                        <th>Destino</th>
-                        <th>Status</th>
-                    </tr>
-                    <tr>
-                        <td>ABC-1234</td>
-                        <td>São Paulo, SP</td>
-                        <td><span class="status-badge status-ok">No Prazo</span></td>
-                    </tr>
-                    <tr>
-                        <td>XYZ-9876</td>
-                        <td>Belo Horizonte, MG</td>
-                        <td><span class="status-badge status-alert">Re-roteando</span></td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-    </main>
+            <button class="btn btn-success" onclick="confirmDelivery()">Confirmar Entrega</button>
+            <button class="btn btn-primary" onclick="registerPause()">Registrar Pausa (Jornada)</button>
+            <button class="btn btn-danger" onclick="reportIssue()">Reportar Ocorrência</button>
 
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active">Rota</div>
+            <div class="nav-item">Cargas</div>
+            <div class="nav-item">Chat</div>
+            <div class="nav-item">Perfil</div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelivery() {
+            const confirm = window.confirm("Confirmar a entrega da Carga #4092?");
+            if (confirm) {
+                alert("Entrega confirmada. O PLIM calculará a rota para o próximo destino.");
+                document.getElementById('currentDestination').innerText = "Filial Campinas - SP";
+                document.getElementById('distance').innerText = "90 km";
+                document.getElementById('time').innerText = "1h 20m";
+            }
+        }
+
+        function registerPause() {
+            const badge = document.getElementById('statusBadge');
+            if (badge.innerText === "EM TRÂNSITO") {
+                badge.innerText = "EM PAUSA";
+                badge.style.backgroundColor = "#f59e0b"; // Amarelo
+                alert("Pausa registrada com sucesso no sistema. (Requisito RF-04 cumprido)");
+            } else {
+                badge.innerText = "EM TRÂNSITO";
+                badge.style.backgroundColor = "var(--primary)";
+                alert("Jornada retomada.");
+            }
+        }
+
+        function reportIssue() {
+            const issue = window.prompt("Descreva a ocorrência (Ex: Pneu furado, Trânsito severo):");
+            if (issue) {
+                alert("Ocorrência enviada ao Gerente. A Meta-Heurística irá recalcular a rota se necessário.");
+                document.getElementById('statusBadge').innerText = "ALERTA ENVIADO";
+                document.getElementById('statusBadge').style.backgroundColor = "var(--danger)";
+            }
+        }
+    </script>
 </body>
 </html>
